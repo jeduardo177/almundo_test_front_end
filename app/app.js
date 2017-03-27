@@ -4,8 +4,10 @@
 angular.module('myApp', [
     'ngRoute',
     'ngResource',
+    'ngMaterial',
+    'jkAngularRatingStars',
+    'rzModule',
     'myApp.view1',
-    'myApp.view2',
     'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

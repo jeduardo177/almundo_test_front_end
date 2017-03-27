@@ -1,2 +1,55 @@
-<p class="color">This is the partial for view 1.</p>
-<button type="button" ng-click="gethotels()">Hoteles</button>
+<div layout="row" layout-xs="column">
+    <!--Inicio de maqueta de filtros-->
+    <div flex="30" class="filters">
+        <h1>Filtrar</h1>
+        <!--Inicio Filtro por nombre-->
+        <md-input-container class="md-block" flex-gt-sm>
+            <h3 class="color">Nombre del hotel</h3>
+            <input ng-model="hotel.name">
+        </md-input-container>
+        <!--Fin filtro por nombre-->
+
+        <!--Inicio Filtro de estrellas-->
+        <div>
+            <h3 class="color">Estrellas:</h3>
+            <div class="">
+                <md-checkbox aria-label="Select All"
+                             ng-checked="isChecked()"
+                             md-indeterminate="isIndeterminate()"
+                             ng-click="toggleAll()">Todas las estrellas
+                </md-checkbox>
+            </div>
+            <div class="" ng-repeat="start in starts">
+                <md-checkbox ng-checked="exists(start, selected)" ng-click="toggle(start, selected)">
+                    <jk-rating-stars max-rating="5" rating="start" read-only="readOnly" ></jk-rating-stars>
+                    <div style="width: 100px"></div>
+                </md-checkbox>
+            </div>
+        </div>
+        <!--Fin filtro de estrellas-->
+
+        <!--Inicio filtro por rango de precios-->
+        <div>
+            <h3 class="color">$ Precio por noche:</h3>
+            <rzslider rz-slider-model="slider.minValue"
+                      rz-slider-high="slider.maxValue"
+                      rz-slider-options="slider.options"></rzslider>
+        </div>
+        <!--Fin filtro rango de precios-->
+    </div>
+    <!--Fin de maqueta de filtros-->
+    <div flex>
+        <md-card layout="row" md-theme-watch ng-repeat="hotel in hotels | filter:hotel | filterRangePrice:slider | filterStart:selected">
+            <md-card-title>
+                    <div>
+                        <span class="md-headline">{{hotel.name}}</span>
+                        <jk-rating-stars max-rating="5" rating="hotel.starts" read-only="readOnly" ></jk-rating-stars>
+                    </div>
+            </md-card-title>
+            <md-card-actions layout-align="end center">
+                <h5 class="margin-title--price">Precio por noche por habitación</h5>
+                <span class="md-subhead price">{{hotel.price}} $</span>
+            </md-card-actions>
+        </md-card>
+    </div>
+</div>

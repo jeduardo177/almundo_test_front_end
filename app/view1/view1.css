@@ -1,5 +1,31 @@
 /* view1 css stylesheet */
 
-.color {
-    background-color: blue;
+.filters {
+    background-color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.price{
+    font-size: 40px !important;
+    color: #ff6c00 !important;
+}
+
+.margin-title--price{
+    margin-top: 0px !important
+}
+
+.color{
+    color: #00b6ff;
+}
+
+.md-checkbox.md-default-theme.md-checked .md-icon, md-checkbox.md-checked .md-icon {
+    background-color: #00b6ff !important;
+}
+
+@media (max-width: 599px) {
+    .flex-30{
+        max-width: 100% !important;
+        text-align: center;
+    }
 }
