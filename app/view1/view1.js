@@ -12,31 +12,37 @@ angular.module('myApp.view1', ['ngRoute', 'ngResource', 'ngMaterial', 'jkAngular
 .controller('View1Ctrl', ['$scope','$resource','Hotels',
     function($scope, $resource, Hotels) {
 
-        var min, max;
-        minimo();
+        //Inicializo los valores de la vista
+        init();
 
-        //Obtengo el precio minimo de todos los hoteles
-        function minimo() {
-            var minPrice = $resource('http://localhost:3000/getHotelMinPrice');
-            minPrice.get(function(hotel) {
-                min = hotel.price;
-                maximo();
-            });
-        }
-
-        //Obtengo el precio maximo de todos los hoteles
-        function maximo() {
-            var maxPrice = $resource('http://localhost:3000/getHotelMaxPrice');
-            maxPrice.get(function(hotel) {
-                max = hotel.price;
-                init();
-            });
-        }
-
-        //Inicializo los la lista de hoteles y sus filtros
         function init() {
-            $scope.hotels = Hotels.query();
+            var min =0 , max = 0;
+            //Obtengo la lista de hoteles
+            $scope.hotels = Hotels.query(function () {
+                //Obtengo el el precio minimo para un hotel
+                angular.forEach($scope.hotels,function (hotel) {
+                    if(min === 0){
+                        min = hotel.price;
+                    }
+                    else if(min > hotel.price){
+                        min = hotel.price;
+                    }
+                })
+                //Obtengo el el precio minimo para un hotel
+                angular.forEach($scope.hotels,function (hotel) {
+                    if(max === 0){
+                        max = hotel.price;
+                    }
+                    else if(max < hotel.price){
+                        max = hotel.price;
+                    }
+                })
+                initFilters();
+            });
+        }
 
+        //Inicializo filtros
+        function initFilters() {
             //Inicializo filtro slider para rango de precio
             $scope.slider = {
                 minValue: min,
